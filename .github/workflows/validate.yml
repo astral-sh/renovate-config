@@ -1,0 +1,19 @@
+name: Validate Renovate presets
+
+on:
+  pull_request:
+    paths:
+      - "default.json"
+
+permissions: {}
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - run: |
+          npx --yes --package renovate -- renovate-config-validator default.json
