@@ -3,6 +3,5 @@
     "extends": [
         "config:recommended"
     ],
-    "minimumReleaseAge": "7 days",
-    "minimumReleaseAgeBehaviour": "timestamp-required"
+    "minimumReleaseAge": "7 days"
 }
