@@ -12,8 +12,6 @@ permissions: {}
 jobs:
   validate:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/renovatebot/renovate:42
 
     steps:
       - uses: actions/checkout@v6
@@ -21,4 +19,9 @@ jobs:
           persist-credentials: false
 
       - run: |
-          renovate-config-validator default.json
+          docker run --rm -v \
+            "${{ github.workspace }}:/workspace" \
+            -w /workspace \
+            ghcr.io/renovatebot/renovate:42 \
+            renovate-config-validator \
+            default.json
