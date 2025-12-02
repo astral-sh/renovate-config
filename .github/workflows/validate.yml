@@ -12,10 +12,13 @@ permissions: {}
 jobs:
   validate:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/renovatebot/renovate:42
+
     steps:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
 
       - run: |
-          npx --yes --package renovate -- renovate-config-validator default.json
+          renovate-config-validator default.json
