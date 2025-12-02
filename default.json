@@ -2,10 +2,19 @@
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "dependencyDashboard": true,
     "extends": [
-        "config:recommended"
+        "config:best-practices",
+        "helpers:pinGitHubActionDigestsToSemver"
     ],
     "minimumReleaseAge": "7 days",
     "internalChecksFilter": "strict",
     "prCreation": "not-pending",
-    "prHourlyLimit": 10
+    "prHourlyLimit": 10,
+    "semanticCommits": "disabled",
+    "addLabels": [
+        "internal"
+    ],
+    "separateMajorMinor": false,
+    "suppressNotifications": [
+        "prEditedNotification"
+    ]
 }
