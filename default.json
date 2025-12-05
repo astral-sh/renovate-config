@@ -9,6 +9,7 @@
     "internalChecksFilter": "strict",
     "prCreation": "not-pending",
     "prHourlyLimit": 10,
+    "prConcurrentLimit": 5,
     "semanticCommits": "disabled",
     "addLabels": [
         "internal"
@@ -16,5 +17,25 @@
     "separateMajorMinor": false,
     "suppressNotifications": [
         "prEditedNotification"
-    ]
+    ],
+    "lockFileMaintenance": {
+        "enabled": false,
+        "schedule": [
+            "before 4am on monday"
+        ]
+    },
+    "packageRules": [
+        {
+            "description": "Group lockfile updates by manager",
+            "matchUpdateTypes": [
+                "lockFileMaintenance"
+            ],
+            "groupName": "{{manager}} lockfile updates",
+            "commitMessageSuffix": "for {{manager}}"
+        }
+    ],
+    "vulnerabilityAlerts": {
+        "enabled": true,
+        "vulnerabilityFixStrategy": "lowest"
+    }
 }
