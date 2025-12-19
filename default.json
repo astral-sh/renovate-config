@@ -32,6 +32,18 @@
             ],
             "groupName": "{{manager}} lockfile updates",
             "commitMessageSuffix": "for {{manager}}"
+        },
+        {
+            "description": "Disable minimum release age checks for our own packages",
+            "matchDatasources": [
+                "pypi"
+            ],
+            "matchPackageNames": [
+                "ruff",
+                "uv",
+                "ty"
+            ],
+            "minimumReleaseAge": null
         }
     ],
     "vulnerabilityAlerts": {
