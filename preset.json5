@@ -12,13 +12,16 @@
     // uses a `packageRules` means that it seemingly applies later than
     // our top-level `rangeStrategy` and `cargo.rangeStrategy`.
     //
+    // NOTE: We also remove `security:minimumReleaseAgeNpm` for similar reasons;
+    // we apply a blanket `minimumReleaseAge` below instead, and we don't want
+    // the preset messing with it.
+    //
     // See: https://docs.renovatebot.com/presets-config/#configbest-practices
     "config:recommended",
     "docker:pinDigests",
     "helpers:pinGitHubActionDigests",
     ":configMigration",
     "abandonments:recommended",
-    "security:minimumReleaseAgeNpm",
     // https://docs.renovatebot.com/presets-helpers/#helperspingithubactiondigeststosemver
     'helpers:pinGitHubActionDigestsToSemver',
   ],
@@ -38,7 +41,7 @@
   minimumReleaseAge: '7 days',
 
   internalChecksFilter: 'strict',
-
+`
   // PR settings.
   // Our PRs are created immediately. We do this instead of not-pending because the latter
   // makes Renovate wait an additional 24 hours before creating the PR when there are no checks.
