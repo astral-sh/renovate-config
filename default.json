@@ -2,10 +2,10 @@
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "dependencyDashboard": true,
     "extends": [
-        ":preserveSemverRanges",
         "config:best-practices",
         "helpers:pinGitHubActionDigestsToSemver"
     ],
+    "rangeStrategy": "update-lockfile",
     "minimumReleaseAge": "7 days",
     "internalChecksFilter": "strict",
     "prCreation": "immediate",
