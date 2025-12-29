@@ -5,13 +5,15 @@
   dependencyDashboard: true,
 
   extends: [
+    // https://docs.renovatebot.com/presets-config/#configbest-practices
     'config:best-practices',
+    // https://docs.renovatebot.com/presets-helpers/#helperspingithubactiondigeststosemver
     'helpers:pinGitHubActionDigestsToSemver',
   ],
 
   // Default range strategy for dependencies.
   // NOTE: We override the range strategy from best-practices here (and below),
-  // because it results in exceedingly noisy updates to non-lockfile depenendency files.
+  // because it results in exceedingly noisy updates to non-lockfile dependency files.
   rangeStrategy: 'auto',
 
   // Additionally, we set the range strategy for cargo to 'update-lockfile' to avoid
