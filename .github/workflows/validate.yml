@@ -19,10 +19,11 @@ jobs:
           persist-credentials: false
 
       - run: |
-          docker run --rm -v \
-            "${{ github.workspace }}:/workspace" \
-            -w /workspace \
-            ghcr.io/renovatebot/renovate:latest \
-            renovate-config-validator \
-            default.json
-            preset.json5
+          for config in default.json preset.json5; do
+            docker run --rm -v \
+              "${{ github.workspace }}:/workspace" \
+              -w /workspace \
+              ghcr.io/renovatebot/renovate:latest \
+              renovate-config-validator \
+              "$config"
+          done
