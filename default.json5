@@ -1,0 +1,83 @@
+{
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+
+  // Always enable the dependency dashboard.
+  dependencyDashboard: true,
+
+  extends: [
+    // https://docs.renovatebot.com/presets-config/#configbest-practices
+    'config:best-practices',
+    // https://docs.renovatebot.com/presets-helpers/#helperspingithubactiondigeststosemver
+    'helpers:pinGitHubActionDigestsToSemver',
+  ],
+
+  // Default range strategy for dependencies.
+  // NOTE: We override the range strategy from best-practices here (and below),
+  // because it results in exceedingly noisy updates to non-lockfile dependency files.
+  rangeStrategy: 'auto',
+
+  // Additionally, we set the range strategy for cargo to 'update-lockfile' to avoid
+  // unnecessary updates to Cargo.toml files.
+  cargo: {
+    rangeStrategy: 'update-lockfile',
+  },
+
+  // We apply a default blanket cooldown of 7 days to all dependencies.
+  minimumReleaseAge: '7 days',
+
+  internalChecksFilter: 'strict',
+
+  // PR settings.
+  // Our PRs are created immediately. We do this instead of not-pending because the latter
+  // makes Renovate wait an additional 24 hours before creating the PR when there are no checks.
+  prCreation: 'immediate',
+  prHourlyLimit: 10,
+  prConcurrentLimit: 5,
+
+  // Conventions: we generally don't use semantic commits, and we add an "internal" label to all dependency update PRs.
+  semanticCommits: 'disabled',
+  addLabels: ['internal'],
+
+  separateMajorMinor: false,
+
+  // These notifications are very noisy.
+  suppressNotifications: ['prEditedNotification'],
+
+  // Lock file maintenance configuration
+  lockFileMaintenance: {
+    enabled: false,
+    schedule: ['before 4am on monday'],
+  },
+
+  packageRules: [
+    // All lock file maintenance: group PRs by manager.
+    {
+      description: 'Group lockfile updates by manager',
+      matchUpdateTypes: ['lockFileMaintenance'],
+      groupName: '{{manager}} lockfile updates',
+      commitMessageSuffix: 'for {{manager}}',
+    },
+    // Python: disable minimum release age for our own packages.
+    {
+      description: 'Disable minimum release age checks for our own Python packages',
+      matchDatasources: ['pypi'],
+      matchPackageNames: ['ruff', 'uv', 'ty'],
+      minimumReleaseAge: null,
+    },
+    // pre-commit: disable minimum release age for our own pre-commit hooks.
+    {
+      description: 'Disable minimum release age checks for our own pre-commit hooks',
+      matchManagers: ['pre-commit'],
+      matchPackageNames: [
+        'astral-sh/ruff-pre-commit',
+        'astral-sh/uv-pre-commit',
+        'astral-sh/ty-pre-commit',
+      ],
+    },
+  ],
+
+  vulnerabilityAlerts: {
+    enabled: true,
+    vulnerabilityFixStrategy: 'lowest',
+  },
+}
