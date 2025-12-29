@@ -1,0 +1,68 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "dependencyDashboard": true,
+    "extends": [
+        "config:best-practices",
+        "helpers:pinGitHubActionDigestsToSemver"
+    ],
+    "rangeStrategy": "auto",
+    "cargo": {
+        "rangeStrategy": "update-lockfile"
+    },
+    "minimumReleaseAge": "7 days",
+    "internalChecksFilter": "strict",
+    "prCreation": "immediate",
+    "prHourlyLimit": 10,
+    "prConcurrentLimit": 5,
+    "semanticCommits": "disabled",
+    "addLabels": [
+        "internal"
+    ],
+    "separateMajorMinor": false,
+    "suppressNotifications": [
+        "prEditedNotification"
+    ],
+    "lockFileMaintenance": {
+        "enabled": false,
+        "schedule": [
+            "before 4am on monday"
+        ]
+    },
+    "packageRules": [
+        {
+            "description": "Group lockfile updates by manager",
+            "matchUpdateTypes": [
+                "lockFileMaintenance"
+            ],
+            "groupName": "{{manager}} lockfile updates",
+            "commitMessageSuffix": "for {{manager}}"
+        },
+        {
+            "description": "Disable minimum release age checks for our own Python packages",
+            "matchDatasources": [
+                "pypi"
+            ],
+            "matchPackageNames": [
+                "ruff",
+                "uv",
+                "ty"
+            ],
+            "minimumReleaseAge": null
+        },
+        {
+            "description": "Disable minimum release age checks for our own pre-commit hooks",
+            "matchManagers": [
+                "pre-commit"
+            ],
+            "matchPackageNames": [
+                "astral-sh/ruff-pre-commit",
+                "astral-sh/uv-pre-commit",
+                "astral-sh/ty-pre-commit"
+            ]
+        }
+    ],
+    "vulnerabilityAlerts": {
+        "enabled": true,
+        "vulnerabilityFixStrategy": "lowest"
+    }
+}
