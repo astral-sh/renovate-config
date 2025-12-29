@@ -5,7 +5,10 @@
         "config:best-practices",
         "helpers:pinGitHubActionDigestsToSemver"
     ],
-    "rangeStrategy": "update-lockfile",
+    "rangeStrategy": "auto",
+    "cargo": {
+        "rangeStrategy": "update-lockfile"
+    },
     "minimumReleaseAge": "7 days",
     "internalChecksFilter": "strict",
     "prCreation": "immediate",
