@@ -5,8 +5,20 @@
   dependencyDashboard: true,
 
   extends: [
-    // https://docs.renovatebot.com/presets-config/#configbest-practices
-    'config:best-practices',
+    // NOTE: This is everything inside the "best-practices" preset, *except*
+    // for `:pinDevDependencies`. We intentionally exclude that because it
+    // overrides our desired `rangeStrategy` settings below. Normally our own
+    // settings would take precedence, but the fact that `:pinDevDependencies`
+    // uses a `packageRules` means that it seemingly applies later than
+    // our top-level `rangeStrategy` and `cargo.rangeStrategy`.
+    //
+    // See: https://docs.renovatebot.com/presets-config/#configbest-practices
+    "config:recommended",
+    "docker:pinDigests",
+    "helpers:pinGitHubActionDigests",
+    ":configMigration",
+    "abandonments:recommended",
+    "security:minimumReleaseAgeNpm"
     // https://docs.renovatebot.com/presets-helpers/#helperspingithubactiondigeststosemver
     'helpers:pinGitHubActionDigestsToSemver',
   ],
