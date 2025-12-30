@@ -41,6 +41,7 @@
   minimumReleaseAge: '7 days',
 
   internalChecksFilter: 'strict',
+
   // PR settings.
   // Our PRs are created immediately. We do this instead of not-pending because the latter
   // makes Renovate wait an additional 24 hours before creating the PR when there are no checks.
