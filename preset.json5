@@ -77,10 +77,7 @@
       description: 'Disable minimum release age checks for our own GitHub Actions',
       matchManagers: ['github-actions'],
       matchPackageNames: [
-        'astral-sh/ruff-action',
-        'astral-sh/setup-uv',
-        'astral-sh/attest-action',
-        'astral-sh/pyx-auth-action',
+        'astral-sh/*',
       ],
       minimumReleaseAge: null,
     },
@@ -96,9 +93,7 @@
       description: 'Disable minimum release age checks for our own pre-commit hooks',
       matchManagers: ['pre-commit'],
       matchPackageNames: [
-        'astral-sh/ruff-pre-commit',
-        'astral-sh/uv-pre-commit',
-        'astral-sh/ty-pre-commit',
+        'astral-sh/*',
       ],
     },
   ],
