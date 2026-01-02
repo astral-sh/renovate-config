@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "default.json"
+      - "preset.json5"
       - ".github/workflows/validate.yml"
   workflow_dispatch:
 
