@@ -46,8 +46,6 @@
   // Our PRs are created immediately. We do this instead of not-pending because the latter
   // makes Renovate wait an additional 24 hours before creating the PR when there are no checks.
   prCreation: 'immediate',
-  prHourlyLimit: 10,
-  prConcurrentLimit: 5,
 
   // Conventions: we generally don't use semantic commits, and we add an "internal" label to all dependency update PRs.
   semanticCommits: 'disabled',
