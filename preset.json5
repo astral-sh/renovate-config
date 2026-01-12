@@ -47,6 +47,18 @@
   // makes Renovate wait an additional 24 hours before creating the PR when there are no checks.
   prCreation: 'immediate',
 
+  // By default, Renovate will only create 2 PRs in any single hourly interval.
+  // But we only allow Renovate to create PRs between midnight and 4am on Monday
+  // in most of our repos, so this is not sufficient in general. Per the docs,
+  // 0 means "no limit": <https://docs.renovatebot.com/configuration-options/#prhourlylimit>
+  prHourlyLimit: 0,
+
+  // Similarly, by default, Renovate will not create any new PRs if it already has 10 open
+  // on any repo, but that isn't generally what we want: we generally want dependency update PRs
+  // for all available dependencies. Per the docs, 0 means "no limit":
+  // <https://docs.renovatebot.com/configuration-options/#prconcurrentlimit>
+  prConcurrentLimit: 0,
+
   // Conventions: we generally don't use semantic commits, and we add an "internal" label to all dependency update PRs.
   semanticCommits: 'disabled',
   addLabels: ['internal'],
