@@ -106,6 +106,13 @@
         'astral-sh/*',
       ],
     },
+    // Docker: use descriptive group name for container image digest updates.
+    {
+      groupName: 'container image digests',
+      matchDatasources: ['docker'],
+      matchUpdateTypes: ['pinDigest'],
+      description: 'Update container image digests',
+    },
   ],
 
   vulnerabilityAlerts: {
