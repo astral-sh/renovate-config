@@ -26,6 +26,11 @@
     'helpers:pinGitHubActionDigestsToSemver',
   ],
 
+  schedule: [
+    // Every Monday, Wednesday, and Friday before 4AM.
+    "0 0-3 * * 1,3,5"
+  ],
+
   // Default range strategy for dependencies.
   // NOTE: We override the range strategy from best-practices here (and below),
   // because it results in exceedingly noisy updates to non-lockfile dependency files.
@@ -71,7 +76,7 @@
   // Lock file maintenance configuration
   lockFileMaintenance: {
     enabled: false,
-    schedule: ['before 4am on monday'],
+    schedule: ["0 0-3 * * 1,3,5"],
   },
 
   packageRules: [
