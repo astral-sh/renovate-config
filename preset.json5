@@ -112,6 +112,8 @@
       matchDatasources: ['docker'],
       matchUpdateTypes: ['pinDigest'],
       description: 'Update container image digests',
+      commitMessageAction: 'Update',
+      commitMessageTopic: 'container image digests',
     },
   ],
 
