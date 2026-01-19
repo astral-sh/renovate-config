@@ -28,7 +28,7 @@
 
   schedule: [
     // Every Monday, Wednesday, and Friday before 4AM.
-    "0 0-3 * * 1,3,5"
+    "* 0-3 * * 1,3,5"
   ],
 
   // Default range strategy for dependencies.
@@ -76,7 +76,7 @@
   // Lock file maintenance configuration
   lockFileMaintenance: {
     enabled: false,
-    schedule: ["0 0-3 * * 1,3,5"],
+    schedule: ["* 0-3 * * 1,3,5"],
   },
 
   packageRules: [
