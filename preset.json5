@@ -105,6 +105,7 @@
       matchPackageNames: [
         'astral-sh/*',
       ],
+      minimumReleaseAge: null,
     },
     // Docker: use descriptive group name for container image digest updates.
     {
