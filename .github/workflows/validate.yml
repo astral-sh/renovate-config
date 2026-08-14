@@ -13,18 +13,15 @@ permissions: {}
 jobs:
   validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           persist-credentials: false
 
-      - run: |
-          for config in default.json preset.json5; do
-            docker run --rm -v \
-              "${{ github.workspace }}:/workspace" \
-              -w /workspace \
-              ghcr.io/renovatebot/renovate:latest \
-              renovate-config-validator \
-              "$config"
-          done
+      - name: Validate repository-level Renovate presets
+        uses: docker://renovate/renovate:43.264.2@sha256:062bec49857f0b23232e09fc9a557b3abf71dd499dbf54c2137a83d9c6320795
+        with:
+          entrypoint: /usr/local/sbin/renovate-config-validator
+          args: --strict --no-global default.json preset.json5

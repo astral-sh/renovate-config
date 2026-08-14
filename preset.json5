@@ -5,25 +5,25 @@
   dependencyDashboard: true,
 
   extends: [
-    // NOTE: This is everything inside the "best-practices" preset, *except*
-    // for `:pinDevDependencies`. We intentionally exclude that because it
-    // overrides our desired `rangeStrategy` settings below. Normally our own
-    // settings would take precedence, but the fact that `:pinDevDependencies`
-    // uses a `packageRules` means that it seemingly applies later than
-    // our top-level `rangeStrategy` and `cargo.rangeStrategy`.
+    // Recreate `config:best-practices`, except for presets that conflict with
+    // our organization-wide policy:
     //
-    // NOTE: We also remove `security:minimumReleaseAgeNpm` for similar reasons;
-    // we apply a blanket `minimumReleaseAge` below instead, and we don't want
-    // the preset messing with it.
+    // `:pinDevDependencies` uses a package rule that overrides the desired
+    // top-level `rangeStrategy` and `cargo.rangeStrategy` settings below.
+    //
+    // `security:minimumReleaseAgeNpm` applies a shorter, npm-specific cooldown
+    // that would override our blanket minimum release age.
+    //
+    // `:maintainLockFilesWeekly` conflicts with our disabled-by-default lock
+    // file maintenance policy; individual repositories can opt in instead.
     //
     // See: https://docs.renovatebot.com/presets-config/#configbest-practices
-    "config:recommended",
-    "docker:pinDigests",
-    "helpers:pinGitHubActionDigests",
-    ":configMigration",
-    "abandonments:recommended",
-    // https://docs.renovatebot.com/presets-helpers/#helperspingithubactiondigeststosemver
+    'config:recommended',
+    'docker:pinDigests',
+    // This preset already includes `helpers:pinGitHubActionDigests`.
     'helpers:pinGitHubActionDigestsToSemver',
+    ':configMigration',
+    'abandonments:recommended',
   ],
 
   // Default range strategy for dependencies.
@@ -37,9 +37,13 @@
     rangeStrategy: 'update-lockfile',
   },
 
-  // We apply a default blanket cooldown of 7 days to all dependencies.
-  minimumReleaseAge: '7 days',
+  // Apply a blanket cooldown of 30 days to third-party dependency updates.
+  minimumReleaseAge: '30 days',
 
+  // Fail closed when a registry does not provide a release timestamp.
+  minimumReleaseAgeBehaviour: 'timestamp-required',
+
+  // Do not create a branch or PR until the release has passed its cooldown.
   internalChecksFilter: 'strict',
 
   // PR settings.
@@ -75,6 +79,13 @@
   },
 
   packageRules: [
+    // Pin the version already in use immediately. Waiting to pin would leave
+    // mutable GitHub Action and container references vulnerable to tampering.
+    {
+      description: 'Pin existing dependency references without a cooldown',
+      matchUpdateTypes: ['pinDigest'],
+      minimumReleaseAge: null,
+    },
     // All lock file maintenance: group PRs by manager.
     {
       description: 'Group lockfile updates by manager',
@@ -120,6 +131,8 @@
 
   vulnerabilityAlerts: {
     enabled: true,
+    // Never delay a fix for a known vulnerability behind the release cooldown.
+    minimumReleaseAge: null,
     vulnerabilityFixStrategy: 'lowest',
   },
 }
