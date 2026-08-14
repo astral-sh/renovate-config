@@ -37,6 +37,11 @@
     rangeStrategy: 'update-lockfile',
   },
 
+  // Keep pre-commit hook revisions current; Renovate disables this manager by default.
+  'pre-commit': {
+    enabled: true,
+  },
+
   // Apply a blanket cooldown of 30 days to third-party dependency updates.
   minimumReleaseAge: '30 days',
 
@@ -93,6 +98,14 @@
       groupName: '{{manager}} lockfile updates',
       commitMessageSuffix: 'for {{manager}}',
     },
+    // Artifact upload and download actions must remain compatible with each other.
+    {
+      description: 'Keep GitHub artifact upload and download actions in sync',
+      groupName: 'Artifact GitHub Actions dependencies',
+      matchManagers: ['github-actions'],
+      matchDatasources: ['gitea-tags', 'github-tags'],
+      matchPackageNames: ['actions/upload-artifact', 'actions/download-artifact'],
+    },
     // GitHub Actions: disable minimum release age for our own actions.
     {
       description: 'Disable minimum release age checks for our own GitHub Actions',
@@ -131,6 +144,8 @@
 
   vulnerabilityAlerts: {
     enabled: true,
+    // Do not inherit repository-specific labels that skip release or build checks.
+    labels: ['internal', 'security'],
     // Never delay a fix for a known vulnerability behind the release cooldown.
     minimumReleaseAge: null,
     vulnerabilityFixStrategy: 'lowest',
