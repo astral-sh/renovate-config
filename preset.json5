@@ -144,6 +144,9 @@
 
   vulnerabilityAlerts: {
     enabled: true,
+    // The security label already identifies these PRs; keep their titles consistent
+    // with other dependency updates instead of appending `[SECURITY]`.
+    commitMessageSuffix: null,
     // Do not inherit repository-specific labels that skip release or build checks.
     labels: ['internal', 'security'],
     // Never delay a fix for a known vulnerability behind the release cooldown.
