@@ -62,11 +62,10 @@
   // 0 means "no limit": <https://docs.renovatebot.com/configuration-options/#prhourlylimit>
   prHourlyLimit: 0,
 
-  // Similarly, by default, Renovate will not create any new PRs if it already has 10 open
-  // on any repo, but that isn't generally what we want: we generally want dependency update PRs
-  // for all available dependencies. Per the docs, 0 means "no limit":
+  // Allow more concurrent dependency updates than Renovate's default of 10,
+  // while keeping the number of open PRs manageable.
   // <https://docs.renovatebot.com/configuration-options/#prconcurrentlimit>
-  prConcurrentLimit: 0,
+  prConcurrentLimit: 15,
 
   // Conventions: we generally don't use semantic commits, and we add an "internal" label to all dependency update PRs.
   semanticCommits: 'disabled',
