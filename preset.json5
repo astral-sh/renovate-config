@@ -83,6 +83,19 @@
     schedule: ['before 4am on monday'],
   },
 
+  customManagers: [
+    // Opt in with a workflow comment so tool versions and checksums update together.
+    // See README.md for the annotation format.
+    {
+      customType: 'regex',
+      managerFilePatterns: ['/^\\.github/workflows/.+\\.ya?ml$/'],
+      matchStrings: [
+        '# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+version: "(?<currentValue>[^"\\r\\n]+)"(?:\\s+checksum: "(?<currentDigest>[a-f0-9]{64})")?',
+      ],
+      versioningTemplate: 'semver',
+    },
+  ],
+
   packageRules: [
     // Pin the version already in use immediately. Waiting to pin would leave
     // mutable GitHub Action and container references vulnerable to tampering.
@@ -114,6 +127,15 @@
         'astral-sh/*',
       ],
       minimumReleaseAge: null,
+    },
+    // The custom manager updates uv workflow versions and their checksums together.
+    {
+      description: 'Disable updates to uv workflow versions that leave checksums unchanged',
+      matchManagers: ['github-actions'],
+      matchDepTypes: ['uses-with'],
+      matchPackageNames: ['astral-sh/uv'],
+      matchFileNames: ['.github/workflows/**'],
+      enabled: false,
     },
     // Python: disable minimum release age for our own packages.
     {
