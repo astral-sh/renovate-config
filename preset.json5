@@ -146,8 +146,10 @@
       minimumReleaseAge: null,
     },
     // uv-pre-commit installs uv, so group its updates with uv workflow pins.
-    // The mirror may publish later, so Renovate can briefly propose a workflow
-    // update before the matching hook is available.
+    //
+    // Note that the mirror may publish later, so Renovate *can* still sometimes 
+    // propose a workflow update before the matching hook is available. This
+    // grouping does however make this mismatch much less likely to happen.
     {
       description: 'Group uv and its pre-commit hook updates',
       matchManagers: ['custom.regex', 'pre-commit'],
