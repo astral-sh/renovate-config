@@ -145,6 +145,17 @@
       matchPackageNames: ['@astral-sh/**'],
       minimumReleaseAge: null,
     },
+    // uv-pre-commit installs uv, so group its updates with uv workflow pins.
+    //
+    // Note that the mirror may publish later, so Renovate *can* still sometimes 
+    // propose a workflow update before the matching hook is available. This
+    // grouping does however make this mismatch much less likely to happen.
+    {
+      description: 'Group uv and its pre-commit hook updates',
+      matchManagers: ['custom.regex', 'pre-commit'],
+      matchPackageNames: ['astral-sh/uv', 'astral-sh/uv-pre-commit'],
+      groupName: 'uv',
+    },
     // The custom manager updates uv workflow versions and their checksums together.
     {
       description: 'Disable updates to uv workflow versions that leave checksums unchanged',
