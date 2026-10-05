@@ -119,13 +119,30 @@
       matchDatasources: ['gitea-tags', 'github-tags'],
       matchPackageNames: ['actions/upload-artifact', 'actions/download-artifact'],
     },
-    // GitHub Actions: disable minimum release age for our own actions.
+    // Disable the cooldown for packages sourced from our GitHub repositories.
     {
-      description: 'Disable minimum release age checks for our own GitHub Actions',
-      matchManagers: ['github-actions'],
-      matchPackageNames: [
-        'astral-sh/*',
-      ],
+      description: 'Disable minimum release age checks for our own source repositories',
+      matchSourceUrls: ['https://github.com/astral-sh/**'],
+      minimumReleaseAge: null,
+    },
+    // GitHub: cover our repositories even when source metadata is unavailable.
+    {
+      description: 'Disable minimum release age checks for our own GitHub dependencies',
+      matchDatasources: ['github-*'],
+      matchPackageNames: ['astral-sh/**'],
+      minimumReleaseAge: null,
+    },
+    // Docker and npm: cover our published namespaces when source metadata is unavailable.
+    {
+      description: 'Disable minimum release age checks for our own container images',
+      matchDatasources: ['docker'],
+      matchPackageNames: ['ghcr.io/astral-sh/**', 'astral/uv', 'docker.io/astral/uv'],
+      minimumReleaseAge: null,
+    },
+    {
+      description: 'Disable minimum release age checks for our own npm packages',
+      matchDatasources: ['npm'],
+      matchPackageNames: ['@astral-sh/**'],
       minimumReleaseAge: null,
     },
     // The custom manager updates uv workflow versions and their checksums together.
@@ -141,16 +158,7 @@
     {
       description: 'Disable minimum release age checks for our own Python packages',
       matchDatasources: ['pypi'],
-      matchPackageNames: ['ruff', 'uv', 'ty'],
-      minimumReleaseAge: null,
-    },
-    // pre-commit: disable minimum release age for our own pre-commit hooks.
-    {
-      description: 'Disable minimum release age checks for our own pre-commit hooks',
-      matchManagers: ['pre-commit'],
-      matchPackageNames: [
-        'astral-sh/*',
-      ],
+      matchPackageNames: ['ruff', 'uv', 'ty', 'uv-build'],
       minimumReleaseAge: null,
     },
     // Docker: use descriptive group name for container image digest updates.
