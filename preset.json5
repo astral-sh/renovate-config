@@ -119,6 +119,14 @@
       matchDatasources: ['gitea-tags', 'github-tags'],
       matchPackageNames: ['actions/upload-artifact', 'actions/download-artifact'],
     },
+    // Astral's shared actions use YYYY.MM.DD.N tags.
+    {
+      description: 'Use calendar versioning for our shared GitHub Actions',
+      matchManagers: ['github-actions'],
+      matchPackageNames: ['astral-sh/github-actions'],
+      extractVersion: '^(?<version>\\d+\\.\\d+\\.\\d+\\.\\d+)$',
+      versioning: 'regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\.(?<build>\\d+)$',
+    },
     // Disable the cooldown for packages sourced from our GitHub repositories.
     {
       description: 'Disable minimum release age checks for our own source repositories',
