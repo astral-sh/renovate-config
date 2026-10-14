@@ -178,7 +178,8 @@
     // compatible version and cause builds to fail. Disable routine updates so
     // the requirement and constraint can be updated together.
     //
-    // Vulnerability alerts can still override this rule.
+    // See https://github.com/astral-sh/renovate-config/pull/30 for more
+    // details. Vulnerability alerts can still override this rule.
     {
       description: 'Disable routine updates to Python build-system requirements',
       matchDepTypes: ['build-system.requires'],
