@@ -173,6 +173,17 @@
       matchFileNames: ['.github/workflows/**'],
       enabled: false,
     },
+    // Updating a build-system requirement without updating a separate build
+    // constraint (such as uv's `build-constraint-dependencies`) can leave no
+    // compatible version and cause builds to fail. Disable routine updates so
+    // the requirement and constraint can be updated together.
+    //
+    // Vulnerability alerts can still override this rule.
+    {
+      description: 'Disable routine updates to Python build-system requirements',
+      matchDepTypes: ['build-system.requires'],
+      enabled: false,
+    },
     // Python: disable minimum release age for our own packages.
     {
       description: 'Disable minimum release age checks for our own Python packages',
