@@ -11,8 +11,8 @@ For example, to update uv and its checksum in an `astral-sh/setup-uv` step:
 ```yaml
 with:
   # renovate: datasource=github-release-attachments depName=astral-sh/uv
-  version: "0.12.7"
-  checksum: "788f18abea7c5f55d6216e4f5613fd89d4d59b631efeec117b2b07fe72f1da21"
+  version: "0.13.5"
+  checksum: "f68d291c75783122dad58ab77def0e13f3233f358731db5d6d7e8715603b928f"
 ```
 
 Keep the annotation, double-quoted version, and double-quoted checksum on consecutive lines in that order. The example checksum is for uv's `x86_64-unknown-linux-gnu` archive; use the correct checksum for your runner. Renovate uses the existing checksum to identify the release asset whose checksum it should update.
